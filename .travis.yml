@@ -8,7 +8,7 @@ before_install:
 - nvm install 10.15.3
 - npm i -g dat
 before_script:
-- dat clone $DATHASH ./_site --exit
+- travis_wait 1 dat clone $DATHASH ./_site --exit
 - bundle exec jekyll build
 addons:
   apt:
