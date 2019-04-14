@@ -1,6 +1,8 @@
 language: ruby
 rvm:
   - 2.6.0
+env:
+  -DAT_HASH="dat://0b658ddf53463118ded55ff7b1204fe32f1d10f4b679ef859c7d9d06725e8f3b"
 
 before_install:
   - gem update --system
@@ -10,7 +12,7 @@ before_install:
   - npm i -g dat
 
 before_script:
-  - dat clone $dat_hash ./_site --exit
+  - dat clone $DAT_HASH ./_site --exit
   - bundle exec jekyll build
 
 addons:
