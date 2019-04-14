@@ -11,7 +11,7 @@ before_script:
 - dat clone $DAT_HASH ./_site --exit
 - bundle exec jekyll build
 - cd ./_site
-- dat keys import $DATKEY
+- dat keys import
 - dat sync --no-watch
 addons:
   apt:
