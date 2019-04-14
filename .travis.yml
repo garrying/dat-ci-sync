@@ -1,29 +1,21 @@
-matrix:
-  include:
-    - language: ruby
-      addons:
-        apt:
-          packages:
-            libcurl4-openssl-dev
-      env:
-        global:
-          NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-      rvm:
-        2.6.0
-      before_script:
-        - gem install bundler
-        - bundle exec jekyll build
-      script:
-        travis_retry bundle exec htmlproofer --check-html --allow-hash-href --internal_domains "/www.ournetworks.ca/,/ournetworks.ca/" ./_site
-      cache: bundler
-    # - language: node_js
-    #   node_js:
-    #     - "10.15.3"
-    #   before_script:
-    #     - npm install -g dat
-    #     - dat keys import
-    #   script:
-    #     - dat share
+language: ruby
+rvm:
+  - 2.6.0
+
+before_script: bundle exec jekyll build
+
+addons:
+  apt:
+    packages:
+    - libcurl4-openssl-dev
+
+env:
+  global:
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+
+cache: bundler
+
+script: travis_retry bundle exec htmlproofer --check-html --allow-hash-href --internal_domains "/www.ournetworks.ca/,/ournetworks.ca/" ./_site
 
 notifications:
   email: false
