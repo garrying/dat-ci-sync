@@ -1,0 +1,6 @@
+.DS_Store
+_site
+.sass-cache
+.jekyll-metadata
+id_rsa
+id_rsa.pub
