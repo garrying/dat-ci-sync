@@ -10,7 +10,7 @@ before_install:
   - npm i -g dat
 
 before_script:
-  - travis_wait 1 dat clone $DATHASH ./_site --exit
+  - travis_wait 1 dat clone $(head -n 1 .well-known/dat) ./_site --exit
   - bundle exec jekyll build
 
 addons:
@@ -20,7 +20,6 @@ addons:
 
 env:
   global:
-  - DATHASH="dat://0b658ddf53463118ded55ff7b1204fe32f1d10f4b679ef859c7d9d06725e8f3b"
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
   - secure: y2S9BLJsrbK1oO9WXpXVtEZ/1JqkiEuZvuRMOciWE+msgzH/iDu6MYGXSYRoe8/MkKtFg9TF6yWmPJh2WXA7xU7srf2GUGTrhK6Vh1v3Q4Pm1nd9tHX38VMr+pJbcl7hrsQzw9NBILQ61fHyynMh/yP1Cj6BrtUlyaiUcnxXVkN1OwpPb/VKSG6aI51Wf3hRpP8j2SNiFXy1ALkUXiOIcnvN1iffYZX889TLMenzGoQ/w/FbRQEcKGEYwPsay+fyr9JVyMAWWkhtOfGQgH7Jo/rx+PGQ68DYEdAurY/QZm5LkNRfRxcpm0JVWV4VYFIPHMGeiL5zM3R2uOD+Mxmo7iy9DL+nKsnodFwa52JajCPegj/eouNOJySa6E2upwkY6RJ5YuiVGONh3ZLDh2dYU3kSa4JfqqlnJMobZwWwg7+z40APijdWwdloDSpwwE1XWjqYjk811deDFb7ZO7fePDwukBD721GpqAsIvgvfpCv8kz469W7Npv0Z5f5QhZfKIYN0Z9az69919lVO3ZaV9Lcl6zCQbxA2ZJ3wlpnR/PsvC2w7twKsieuuUhrdmszoYn/Tvz0ZaxqFWBVTFC/PdLKCrUqMLbRNeKlYFWCTIiFuPMxr6b1Njb7nsMVKiDKLf/aMgT87mlR4VONL1hrizM39RXaST+SveelxYgKYfVY=
 
