@@ -1,30 +1,56 @@
 language: ruby
 rvm:
-- 2.6.0
+  - 2.6.0
+
 before_install:
-- gem update --system
-- gem install bundler
-- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-- nvm install 10.15.3
-- npm i -g dat
-before_script:
-- travis_wait 1 dat clone $DATHASH ./_site --exit
-- bundle exec jekyll build
+  - gem update --system
+  - gem install bundler
+  - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+  - nvm install 10.15.3
+  - npm i -g dat
+
 addons:
   apt:
     packages:
     - libcurl4-openssl-dev
+
 env:
   global:
   - DATHASH="dat://0b658ddf53463118ded55ff7b1204fe32f1d10f4b679ef859c7d9d06725e8f3b"
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
   - secure: y2S9BLJsrbK1oO9WXpXVtEZ/1JqkiEuZvuRMOciWE+msgzH/iDu6MYGXSYRoe8/MkKtFg9TF6yWmPJh2WXA7xU7srf2GUGTrhK6Vh1v3Q4Pm1nd9tHX38VMr+pJbcl7hrsQzw9NBILQ61fHyynMh/yP1Cj6BrtUlyaiUcnxXVkN1OwpPb/VKSG6aI51Wf3hRpP8j2SNiFXy1ALkUXiOIcnvN1iffYZX889TLMenzGoQ/w/FbRQEcKGEYwPsay+fyr9JVyMAWWkhtOfGQgH7Jo/rx+PGQ68DYEdAurY/QZm5LkNRfRxcpm0JVWV4VYFIPHMGeiL5zM3R2uOD+Mxmo7iy9DL+nKsnodFwa52JajCPegj/eouNOJySa6E2upwkY6RJ5YuiVGONh3ZLDh2dYU3kSa4JfqqlnJMobZwWwg7+z40APijdWwdloDSpwwE1XWjqYjk811deDFb7ZO7fePDwukBD721GpqAsIvgvfpCv8kz469W7Npv0Z5f5QhZfKIYN0Z9az69919lVO3ZaV9Lcl6zCQbxA2ZJ3wlpnR/PsvC2w7twKsieuuUhrdmszoYn/Tvz0ZaxqFWBVTFC/PdLKCrUqMLbRNeKlYFWCTIiFuPMxr6b1Njb7nsMVKiDKLf/aMgT87mlR4VONL1hrizM39RXaST+SveelxYgKYfVY=
+
 cache: bundler
-script:
-  - travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
-after_success:
-  - cd _site
-  - echo $DATKEY | dat keys import
-  - travis_wait 1 dat sync --no-watch || travis_terminate 0
+
+stages:
+  - clone-dat
+  - build
+  - test
+  - deploy
+  - deploy-dat
+
+jobs:
+  include:
+    - stage: clone-dat
+      name: "Dat Clone"
+      script:
+        - travis_wait 1 dat clone $DATHASH ./_site --exit
+    - stage: build
+      name: "Jekyll Build"
+      script:
+        - bundle exec jekyll build
+    - stage: test
+      name: "HTMLProofer"
+      script: travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
+    - stage: deploy
+      name: "Deploy to DO"
+      script: echo "Deploy to DO"
+    - stage: deploy-dat
+      name: "Deploy to Dat"
+      script:
+        - cd _site
+        - echo $DATKEY | dat keys import
+        - travis_wait 1 dat sync --no-watch || travis_terminate 0
+
 notifications:
   email: false
