@@ -9,6 +9,10 @@ before_install:
   - nvm install 10.15.3
   - npm i -g dat
 
+before_script:
+  - travis_wait 1 dat clone $DATHASH ./_site --exit
+  - bundle exec jekyll build
+
 addons:
   apt:
     packages:
@@ -22,35 +26,13 @@ env:
 
 cache: bundler
 
-stages:
-  - clone-dat
-  - build
-  - test
-  - deploy
-  - deploy-dat
+script:
+  - travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
 
-jobs:
-  include:
-    - stage: clone-dat
-      name: "Dat Clone"
-      script:
-        - travis_wait 1 dat clone $DATHASH ./_site --exit
-    - stage: build
-      name: "Jekyll Build"
-      script:
-        - bundle exec jekyll build
-    - stage: test
-      name: "HTMLProofer"
-      script: travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
-    - stage: deploy
-      name: "Deploy to DO"
-      script: echo "Deploy to DO"
-    - stage: deploy-dat
-      name: "Deploy to Dat"
-      script:
-        - cd _site
-        - echo $DATKEY | dat keys import
-        - travis_wait 1 dat sync --no-watch || travis_terminate 0
+after_success:
+  - cd _site
+  - echo $DATKEY | dat keys import
+  - travis_wait 1 dat sync --no-watch || travis_terminate 0
 
 notifications:
   email: false
