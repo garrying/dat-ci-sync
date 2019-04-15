@@ -5,6 +5,7 @@ rvm:
 before_install:
   - gem update --system
   - gem install bundler
+  if: branch = master
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
   - nvm install 10.15.3
   - npm i -g dat
@@ -30,6 +31,7 @@ script:
   - travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
 
 after_success:
+  if: branch = master
   - cd _site
   - echo $DATKEY | dat keys import
   - travis_wait 1 dat sync --no-watch || travis_terminate 0
