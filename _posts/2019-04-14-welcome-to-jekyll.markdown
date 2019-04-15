@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Welcome to The DWeb!"
+title:  "Welcome to The Our Networks Web!"
 date:   2019-04-14 16:45:28 -0400
 categories: jekyll update
 ---

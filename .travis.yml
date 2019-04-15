@@ -22,6 +22,7 @@ env:
 cache: bundler
 script:
   - travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
+after_success:
   - cd _site
   - echo $DATKEY | dat keys import
   - travis_wait 1 dat sync --no-watch || travis_terminate 0
