@@ -42,6 +42,7 @@ after_deploy:
   - cd _site
   - echo $DATKEY | dat keys import
   - travis_wait 1 dat sync --no-watch || travis_terminate 0
+  - ipd _site -O
 
 notifications:
   email: false
