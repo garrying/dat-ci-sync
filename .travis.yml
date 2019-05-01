@@ -7,7 +7,7 @@ before_install:
   - gem install bundler
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
   - nvm install 10.15.3
-  - npm i -g dat
+  - npm i -g dat @agentofuser/ipfs-deploy
 
 before_script:
   - travis_wait 1 dat clone $(head -n 1 .well-known/dat) ./_site --exit
@@ -42,6 +42,7 @@ after_deploy:
   - cd _site
   - echo $DATKEY | dat keys import
   - travis_wait 1 dat sync --no-watch || travis_terminate 0
+  - ipd . -O
 
 notifications:
   email: false
