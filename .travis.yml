@@ -1,48 +1,37 @@
 language: ruby
 rvm:
-  - 2.6.0
-
+- 2.6.0
 before_install:
-  - gem update --system
-  - gem install bundler
-  - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-  - nvm install 10.15.3
-  - npm i -g dat @agentofuser/ipfs-deploy
-
+- gem update --system
+- gem install bundler
+- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+- nvm install 10.15.3
+- npm i -g dat @agentofuser/ipfs-deploy
 before_script:
-  - travis_wait 1 dat clone $(head -n 1 .well-known/dat) ./_site --exit
-  - bundle exec jekyll build
-
+- travis_wait 1 dat clone $(head -n 1 .well-known/dat) ./_site --exit
+- bundle exec jekyll build
 addons:
   apt:
     packages:
     - libcurl4-openssl-dev
-
 env:
   global:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-  - secure: y2S9BLJsrbK1oO9WXpXVtEZ/1JqkiEuZvuRMOciWE+msgzH/iDu6MYGXSYRoe8/MkKtFg9TF6yWmPJh2WXA7xU7srf2GUGTrhK6Vh1v3Q4Pm1nd9tHX38VMr+pJbcl7hrsQzw9NBILQ61fHyynMh/yP1Cj6BrtUlyaiUcnxXVkN1OwpPb/VKSG6aI51Wf3hRpP8j2SNiFXy1ALkUXiOIcnvN1iffYZX889TLMenzGoQ/w/FbRQEcKGEYwPsay+fyr9JVyMAWWkhtOfGQgH7Jo/rx+PGQ68DYEdAurY/QZm5LkNRfRxcpm0JVWV4VYFIPHMGeiL5zM3R2uOD+Mxmo7iy9DL+nKsnodFwa52JajCPegj/eouNOJySa6E2upwkY6RJ5YuiVGONh3ZLDh2dYU3kSa4JfqqlnJMobZwWwg7+z40APijdWwdloDSpwwE1XWjqYjk811deDFb7ZO7fePDwukBD721GpqAsIvgvfpCv8kz469W7Npv0Z5f5QhZfKIYN0Z9az69919lVO3ZaV9Lcl6zCQbxA2ZJ3wlpnR/PsvC2w7twKsieuuUhrdmszoYn/Tvz0ZaxqFWBVTFC/PdLKCrUqMLbRNeKlYFWCTIiFuPMxr6b1Njb7nsMVKiDKLf/aMgT87mlR4VONL1hrizM39RXaST+SveelxYgKYfVY=
-
+  - secure: NcWf78PRWriGDNiCWyz+Fqq6o4MnsB6kDENZyWZpUy9vDcF/Vq1363p/S01LUgruTHqfNRgJ9ej52p1A3wed9oNc/2kb/Zoc9wS9N/kmpgBl8Wmen0G8VfAFOQlX0tKKQbZIY3XIkVVt7ZhpLzqMeZbdCLIj2hz3Lj4GMBmNOOYNnXnHCM9vfCXwmGIHCe2ef6h//0NjC+lur43Fav5wb/c0NgCeEUHX3QCjZjW6ZK4T7ONya85V27ptoDeIUwqhkExC/v62y+o8RewLjstY3P7ElOBsz9tuv6IpFjAH2wRuwnyp3+KnQ3sXRkgYGw6sYI1gEbGmrQ63wKMn7itu9iyw4zD35ypiZjjAqbiQZyuahUJcIppKEl2E5TnfDC5rlk6b1fMz6M3hiJVX1K4UVYWUGaSjbUw2zFHwWTlaBRTFt3/F5mcOtagdbK4olsnbP5UH13o8Z2U+P0S+T7jzwqFJIH/9kzas5oi9e3ik06PIPPNpEGD8AIwhQ6gTvan+gEhhbqgPJMjQIMEb+WB2IAX3daF7wzZNqPBjkZRLeXPX3sKnb52eLA5KghzMoqV4enLuxpkpPR8yg0heipz/BqRxw7eu/SOYby/c7VlBgexTFxa+voGEECZINgB6UPQrhdHdcZSA3hDsMu8g+IOiQDAu/CmasR/xKwJzGo/cgmo=
 cache: bundler
-
 script:
-  - travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
-
+- travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
 deploy:
-  # Cleanup removes keys and build artefacts.
-  # See: https://docs.travis-ci.com/user/deployment/#Uploading-Files-and-skip_cleanup
   skip_cleanup: true
   provider: script
   script: echo "Deployed"
   on:
     branch:
-      - master
-
+    - master
 after_deploy:
-  - cd _site
-  - ipd . -O -C
-  - echo $DATKEY | dat keys import
-  - travis_wait 1 dat sync --no-watch || travis_terminate 0
-
+- cd _site
+- ipd . -O -C
+- echo $DATKEY | dat keys import
+- travis_wait 1 dat sync --no-watch || travis_terminate 0
 notifications:
   email: false
