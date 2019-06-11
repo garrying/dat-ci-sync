@@ -33,6 +33,6 @@ after_deploy:
 - cd _site
 - ipd . -O -C
 - echo $DATKEY | dat keys import
-- dat pull --exit
+- travis_wait 1 dat sync || travis_terminate 0
 notifications:
   email: false
