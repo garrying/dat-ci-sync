@@ -31,7 +31,6 @@ after_deploy:
 - dat clone $(head -n 1 .well-known/dat) ./_site --exit
 - bundle exec jekyll build
 - cd _site
-- ipd . -O -C
 - echo $DATKEY | dat keys import
 - travis_wait 1 dat sync &> /dev/null || travis_terminate 0 
 notifications:
