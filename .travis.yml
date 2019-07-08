@@ -28,7 +28,7 @@ deploy:
     branch:
     - master
 after_deploy:
-- dat clone $(head -n 1 .well-known/dat) ./_site --exit
+- dat $(head -n 1 .well-known/dat) ./_site --exit
 - bundle exec jekyll build
 - cd _site
 - echo $DATKEY | dat keys import
