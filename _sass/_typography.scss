@@ -1,0 +1,178 @@
+// Headings
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  line-height: $base-heading-line-height;
+}
+
+h1 {
+  font-size: 2.18rem;
+  line-height: 1em;
+}
+
+h2 {
+  font-size: 1.81rem;
+}
+
+h3 {
+  margin-top: 1em;
+  font-size: 1.56rem;
+}
+
+h4 {
+  font-size: 1.37rem;
+}
+
+h5 {
+  font-size: 1.2rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: $base-margin-bottom;
+}
+
+// Font-family
+
+.mono {
+  font-family: $mono-font-family;
+}
+
+// Typography helper classes
+
+.fs-small {
+  font-size: $small-font-size;
+}
+
+.ls-narrow {
+  letter-spacing: -3px;
+}
+
+// Outline helper
+
+.outline {
+  color: transparent;
+  @include outline-text($accent-color);
+}
+
+// Heading helpers
+
+.heading {
+  line-height: 1.2em;
+}
+
+.heading-1 {
+  @include fluid-type(320px,1980px,30px,200px);
+}
+
+.heading-2 {
+  @include fluid-type(320px,1980px,30px,150px);
+}
+
+.heading-3 {
+  @include fluid-type(320px,1980px,18px,30px);
+}
+
+// Font-weight helpers
+
+.fw-bold {
+  font-weight: bold;
+}
+
+.fw-normal {
+  font-weight: normal;
+}
+
+// Footer
+
+.footer {
+  a {
+    color: $black;
+    text-decoration: underline;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+// Posts title
+
+.post-header {
+  margin-bottom: 1.2em;
+}
+
+// Typewriter theme effect
+
+.word-spacer + br {
+  @media (max-width: $on-palm) {
+    display: none;
+  }
+}
+
+.typing {
+  line-height: 1.25em;
+  background: transparent;
+  height: 10em;
+  overflow: auto;
+  max-width: $content-width;
+  border-bottom: 1px solid rgba($black, 0.1);
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($text-color, 0.03);
+  }
+  scrollbar-width: thin;
+  scrollbar-color: rgba($text-color, 0.03) transparent;
+
+  @media (max-width: $content-width) {
+    width: 100%;
+  }
+
+
+  p {
+    display: none;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0;
+    animation: typing 3s steps(40, end);
+    animation-fill-mode: forwards;
+
+    &.visible {
+      max-width: unset;
+      display: inline-block;
+    }
+
+    @media (max-width: $on-palm) {
+      display: block;
+      width: auto;
+      overflow: visible;
+      animation: unset;
+    }
+  }
+
+  &:after {
+    content: "";
+    height: 1em;
+    display: block;
+  }
+}
+
+// The typing effect
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}

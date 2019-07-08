@@ -1,0 +1,36 @@
+<header class="header">
+  <div class="container container-full-width flex flex-wrap">
+    <span class="site-title">
+      <a class="logo" href="{{ site.baseurl }}/" rel="home" title="{{ site.title }}">
+        {% include logo/soon-logo.svg %}
+      </a>
+    </span>
+    <input class="menu-btn" type="checkbox" id="menu-btn" />
+    <label class="menu-icon" for="menu-btn"><span>MENU</span></label>
+    <nav class="nav fs-small" aria-label="Primary Menu">
+      <ul class="menu">
+        {% assign currentTitle = page.title %}
+        {% assign current = page.url %}
+        {% assign sorted_pages = site.pages | sort: "order" %}
+          {% for page in sorted_pages %}
+             {% if page.order > 0 and page.parent == nil %}
+               <li>
+                 <a class= "nav-item {% if current != '/' %}{% if page.url == current %}active{% endif %}{% endif %}"
+                    href="{% if page.content.size > 1 %}{{ page.url }}{% else %}#{% endif %}" aria-label="{{ page.title }}">
+                    {% if page.titleDisplay %}{{ page.titleDisplay }}{% else %}{% endif %}
+                 </a>
+                {% assign sorted2_pages = site.pages | sort: "order" %}
+                 <ul class="nav-item-sub" aria-hidden="true">
+                    {%- for page2 in sorted2_pages -%}
+                      {% if page.title == page2.parent %}
+                      <li><a class="{% if current != '/' %}{% if page2.url == current %}active{% endif %}{% endif %}" href="{% if page2.redirect_to %}{{ page2.redirect_to }}{% else %}{{ page2.url }}{% endif %}" aria-label="{% if page2.titleDisplay %}{{ page2.titleDisplay }}{% else %}{{ page2.title }}{% endif %}">{% if page2.titleDisplay %}{{ page2.titleDisplay }}{% else %}{{ page2.title }}{% endif %}</a></li>
+                      {% endif %}
+                    {%- endfor -%}
+                 </ul>
+               </li>
+             {% endif %}
+        {% endfor %}
+      </ul> <!-- .nav -->
+    </nav>
+  </div>
+</header>
