@@ -19,7 +19,7 @@ env:
   - secure: NcWf78PRWriGDNiCWyz+Fqq6o4MnsB6kDENZyWZpUy9vDcF/Vq1363p/S01LUgruTHqfNRgJ9ej52p1A3wed9oNc/2kb/Zoc9wS9N/kmpgBl8Wmen0G8VfAFOQlX0tKKQbZIY3XIkVVt7ZhpLzqMeZbdCLIj2hz3Lj4GMBmNOOYNnXnHCM9vfCXwmGIHCe2ef6h//0NjC+lur43Fav5wb/c0NgCeEUHX3QCjZjW6ZK4T7ONya85V27ptoDeIUwqhkExC/v62y+o8RewLjstY3P7ElOBsz9tuv6IpFjAH2wRuwnyp3+KnQ3sXRkgYGw6sYI1gEbGmrQ63wKMn7itu9iyw4zD35ypiZjjAqbiQZyuahUJcIppKEl2E5TnfDC5rlk6b1fMz6M3hiJVX1K4UVYWUGaSjbUw2zFHwWTlaBRTFt3/F5mcOtagdbK4olsnbP5UH13o8Z2U+P0S+T7jzwqFJIH/9kzas5oi9e3ik06PIPPNpEGD8AIwhQ6gTvan+gEhhbqgPJMjQIMEb+WB2IAX3daF7wzZNqPBjkZRLeXPX3sKnb52eLA5KghzMoqV4enLuxpkpPR8yg0heipz/BqRxw7eu/SOYby/c7VlBgexTFxa+voGEECZINgB6UPQrhdHdcZSA3hDsMu8g+IOiQDAu/CmasR/xKwJzGo/cgmo=
 cache: bundler
 script:
-# - travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
+- travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
 deploy:
   skip_cleanup: true
   provider: script

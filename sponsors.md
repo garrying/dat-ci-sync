@@ -25,7 +25,7 @@ Our Networks is volunteer-run and would not be possible without the support of o
 
 <div class="flex">
   <div class="mt-1">
-    <a href="https://protocol.ai/" rel="noopener"><img style="margin-left: 20px" src="/images/logos/protocol-labs-logo.svg" width="250" alt="Protocol Labs logo" /></a>
+    <a href="https://protocol.ai/" rel="noopener"><img style="margin-left: 20px" src="/images/logos/protocol-labs-logo.svg" width="250" alt="Protocol Labs logo" data-proofer-ignore /></a>
   </div>
 </div>
 
