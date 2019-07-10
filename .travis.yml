@@ -27,7 +27,7 @@ deploy:
   on:
     branch:
     - master
-after_deploy:
+after_script:
 - dat $(head -n 1 .well-known/dat) ./_site --exit
 - bundle exec jekyll build
 - cd _site
