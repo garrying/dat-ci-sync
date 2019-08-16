@@ -4,11 +4,10 @@ rvm:
 before_install:
 - gem update --system
 - gem install bundler
-- if [ "$TRAVIS_BRANCH" = "master" ]; then
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash;
-    nvm install 10.16.0;
-    npm i -g dat @agentofuser/ipfs-deploy;
-  fi
+- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+- nvm install 10.16.0
+- npm i -g dat @agentofuser/ipfs-deploy garrying/make-relative
+- dat $(head -n 1 .well-known/dat) ./_site --exit
 before_script:
 - bundle exec jekyll build
 addons:
@@ -30,10 +29,11 @@ deploy:
     branch:
     - master
 after_script:
-- dat $(head -n 1 .well-known/dat) ./_site --exit
-- bundle exec jekyll build
 - cd _site
 - echo $DATKEY | dat keys import
 - travis_wait 1 dat sync &> /dev/null || travis_terminate 0 
+- rm -fr .dat .well-known
+- npx make-relative https://ournetworks.ca
+- ipd . -O -C
 notifications:
   email: false
