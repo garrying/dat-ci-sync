@@ -33,7 +33,7 @@ after_script:
 - echo $DATKEY | dat keys import
 - travis_wait 1 dat sync &> /dev/null || travis_terminate 0 
 - rm -fr .dat .well-known
-- npx make-relative https://ournetworks.ca
+- make-relative https://ournetworks.ca
 - ipd . -O -C
 notifications:
   email: false
