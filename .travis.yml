@@ -7,7 +7,7 @@ before_install:
 - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 - nvm install 10.16.0
 - npm i -g dat ipfs-deploy garrying/make-relative
-# - dat $(head -n 1 .well-known/dat) ./_site --exit
+- dat $(head -n 1 .well-known/dat) ./_site --exit
 before_script:
 - bundle exec jekyll build
 addons:
