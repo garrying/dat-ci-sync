@@ -76,7 +76,11 @@ p {
 }
 
 .heading-2 {
-  @include fluid-type(320px,1980px,30px,150px);
+  @include fluid-type(320px,1980px,30px,130px);
+}
+
+.heading-2-5 {
+  @include fluid-type(320px,1980px,30px,80px);
 }
 
 .heading-3 {
@@ -127,20 +131,10 @@ p {
   overflow: auto;
   max-width: $content-width;
   border-bottom: 1px solid rgba($black, 0.1);
-  &::-webkit-scrollbar {
-    width: 5px;
-    background-color: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba($text-color, 0.03);
-  }
-  scrollbar-width: thin;
-  scrollbar-color: rgba($text-color, 0.03) transparent;
 
   @media (max-width: $content-width) {
     width: 100%;
   }
-
 
   p {
     display: none;

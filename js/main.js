@@ -45,6 +45,10 @@ if (window.location.search == '?donation=confirmed') {
   formSubmitCallback('Thanks for your support!');
 }
 
+if (window.location.search == '?update=confirmed') {
+  formSubmitCallback('Successfully confirmed your session!');
+}
+
 // scroll interaction
 
 var scrollEvent = false;
@@ -165,3 +169,71 @@ window.setInterval(function() {
     $(this).textMix(randWord, 1000, 'linear')
   })
 }, 2000)
+
+// registration modal
+
+const panel = $('.panel')
+
+const closePanel = function () {
+  panel.hide()
+  $('body').removeClass('invert')
+}
+
+const showPanel = function () {
+  panel.show().focus()
+  $('body').addClass('invert')
+}
+
+$('#close-panel').on('click', closePanel)
+
+$('.nav .nav-item').last().on('click', function (e) {
+  e.preventDefault()
+  showPanel()
+})
+
+$(document).on('click', function (e) {
+  if (!$(e.target).hasClass('nav-item') && $(e.target).parents('.panel').length === 0) {
+    closePanel()
+  }
+}).keydown((e) => {
+  if (e.keyCode === 27) {
+    closePanel()
+  }
+})
+
+// program active menu links
+
+const programTargets = $('[data-nav-program-link]')
+const programNavItems = $('.nav-item')
+const programTopLevelItem = $('.nav-item[href="/program/"]')
+
+const programPositionDetector = function () {
+  if (programTargets.length) {
+    const programSection = []
+    programTargets.each(function (i) {
+      if ($(this).offset().top - $(window).scrollTop() < $(this).height()) {
+        programSection.push(i)
+      }
+    })
+
+    if (programSection.length) {
+      programTopLevelItem.removeClass('active')
+      programNavItems.each(function () {
+        if (this.hash.substr(1) === programTargets.eq([programSection.slice(-1)]).attr('id')) {
+          programNavItems.removeClass('active')
+          $(this).addClass('active')
+        }
+      })
+    } else {
+      programNavItems.removeClass('active')
+      programTopLevelItem.addClass('active')
+    }
+  }
+}
+
+programPositionDetector()
+
+document.addEventListener('scroll', programPositionDetector, {
+  capture: true,
+  passive: true
+})
