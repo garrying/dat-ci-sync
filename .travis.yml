@@ -32,7 +32,7 @@ jobs:
     - stage: test
       script:
         - bundle exec jekyll build
-        - travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
+        - travis_retry bundle exec htmlproofer --check-html --allow-hash-href --internal_domains "/www.ournetworks.ca/,/ournetworks.ca/" ./_site
     - stage: deploy
       name: "Deploy to ournetworks.ca"
       script: bundle exec jekyll build
