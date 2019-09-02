@@ -20,15 +20,12 @@ cache:
   - node_modules
 
 stages:
-  - compile
   - test
   - name: deploy
     if: branch = master
 
 jobs:
   include:
-    - stage: compile
-      script: bundle exec jekyll build
     - stage: test
       script:
         - bundle exec jekyll build
@@ -40,9 +37,6 @@ jobs:
         skip_cleanup: true
         provider: script
         script: echo "Deployed"
-        on:
-          branch:
-          - master
     - name: "Deploy to Dat"
       script:
         - npm i -g dat
