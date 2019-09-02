@@ -24,19 +24,30 @@ cache:
   - node_modules
 script:
 - travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: echo "Deployed"
-  on:
-    branch:
-    - master
-after_script:
-- cd _site
-# - echo $DATKEY | dat keys import
-# - timeout 60 dat sync
-# - rm -fr .dat .well-known
-- make-relative https://ournetworks.ca
-- ipd . -O -C
+
+jobs:
+  include:
+    - stage: test
+      script: travis_retry bundle exec htmlproofer --check-html --allow-hash-href ./_site
+    - stage: deploy
+      name: "Deploy to ournetworks.ca"
+      deploy:
+        skip_cleanup: true
+        provider: script
+        script: echo "Deployed"
+        on:
+          branch:
+          - master
+    - name: "Deploy to Dat"
+      script:
+        - cd _site
+        - echo $DATKEY | dat keys import
+        - travis_wait 1 dat sync &> /dev/null || travis_terminate 0
+    - name: "Deploy to IPFS"
+      script:
+        - rm -fr .dat .well-known
+        - make-relative https://ournetworks.ca
+        - ipd . -O -C
+
 notifications:
   email: false
