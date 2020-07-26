@@ -40,6 +40,7 @@ jobs:
         script: echo "Deployed"
     - name: "Deploy to Dat"
       script:
+        - bundle exec jekyll build
         - npx @sammacbeth/dat-publisher update --del -s 9df4512872871c454408b489d92301e62dd21812af97d24784bdd7b58ee3efb9e365a5a5373c4fabfffbaebc134dd7e4ae91a7e7ea200ad5fb2022d32ba76aa8 --seedtime 180 e365a5a5373c4fabfffbaebc134dd7e4ae91a7e7ea200ad5fb2022d32ba76aa8 _site/
 
 notifications:
